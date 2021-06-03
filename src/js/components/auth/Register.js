@@ -6,10 +6,10 @@ import { signupUrl } from '../../utils/endpoints';
 const Register = () => {
 
    const initialState = {
-      name: 'Helle',
+      name: '',
       email: '',
-      password: 'Test123',
-      password2: 'Test123'
+      password: '',
+      password2: ''
    };
 
 
@@ -89,8 +89,11 @@ const Register = () => {
       try {
          const res = await fetch(signupUrl, {
             method: 'POST',
+            credentials: 'include',
             body: JSON.stringify(user),
-            headers: { 'Content-Type': 'application/json' }
+            headers: {
+               'Content-Type': 'application/json'
+            }
          });
          const data = await res.json();
          if (data.errors) {

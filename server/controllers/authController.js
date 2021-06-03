@@ -43,18 +43,23 @@ module.exports.login_get = (req, res) => {
    res.send('login');
 };
 
+const sendToken = (user, statusCode, req, res) => {
+   const token = createToken(user._id);
+   res.cookie('token', token, { httpOnly: true, secure: true, maxAge: maxAge * 1000 });
+   user.password = undefined;
+   res.status(statusCode).json({ statusCode: 'success', token, user });
+};
 
 //Signup
 module.exports.signup_post = async (req, res) => {
-   const { _id, name, email, password } = req.body;
+   const { name, email, password } = req.body;
 
    try {
       const user = await User.create({ name, email, password });
-
-      const token = createToken(_id);
-      res.cookie('token', token, { httpOnly: true, maxAge: maxAge * 1000 });
-
-      res.status(201).json(user);
+      sendToken(user, 201, req, res);
+      // const token = createToken(_id);
+      // res.cookie('token', token, { httpOnly: true, secure: true, maxAge: maxAge * 1000 });
+      // res.status(201).json({ token, user });
    }
    catch (err) {
 
@@ -68,14 +73,17 @@ module.exports.signup_post = async (req, res) => {
 
 //Login
 module.exports.login_post = async (req, res) => {
-   const { _id, email, password } = req.body;
+   const { email, password } = req.body;
 
    try {
       const user = await User.login(email, password);
-      const token = createToken(_id);
+      // const token = createToken(_id);
 
-      res.cookie('token', token, { httpOnly: true, maxAge: maxAge * 1000 });
-      res.status(200).json(user);
+      // res.cookie('token', token, { httpOnly: true, maxAge: maxAge * 1000 });
+      // res.status(200).json(user);
+
+      sendToken(user, 201, req, res);
+
    } catch (err) {
 
       const errors = handleErrors(err);
