@@ -7,8 +7,8 @@ import { loginUrl } from '../../utils/endpoints';
 const Login = (props) => {
 
    const initialState = {
-      email: '',
-      password: ''
+      email: 'h@h.dk',
+      password: 'Test123'
 
    };
 
@@ -29,7 +29,8 @@ const Login = (props) => {
          placeholder: 'email',
          label: 'Email',
          isRequired: true,
-         value: email
+         value: email,
+         error: errors.email
 
       },
 
@@ -40,7 +41,8 @@ const Login = (props) => {
          inputIdentifier: 'password',
          label: 'Password',
          isRequired: true,
-         value: password
+         value: password,
+         error: errors.password
 
       }
 
@@ -61,8 +63,11 @@ const Login = (props) => {
       try {
          const res = await fetch(loginUrl, {
             method: 'POST',
+            credentials: 'include',
             body: JSON.stringify(user),
-            headers: { 'Content-Type': 'application/json' }
+            headers: {
+               'Content-Type': 'application/json'
+            }
          });
          const data = await res.json();
 
@@ -79,6 +84,7 @@ const Login = (props) => {
       setUser(initialState);
 
    };
+
 
    return (
       <div>

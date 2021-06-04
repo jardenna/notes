@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 const { genSalt, hash, compare } = require('bcrypt');
 
-const emailRegex = /^[a-zA-Z0-9\\+\\.\\_\\æ\\\\ø\\\\å\\-\\+]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-
+const regex = require('../utils/regex');
 
 const userSchema = new mongoose.Schema({
    name: {
@@ -15,7 +14,7 @@ const userSchema = new mongoose.Schema({
       required: [true, 'Please enter an email'],
       unique: true,
       lowercase: true,
-      match: [emailRegex, 'Please enter a valid email']
+      match: [regex.emailRegex, 'Please enter a valid email']
    },
    password: {
       type: String,
@@ -34,15 +33,27 @@ userSchema.pre('save', async function () {
 userSchema.statics.login = async function (email, password) {
    const user = await this.findOne({ email });
 
+
+   if (email === '' || password === '') {
+      throw Error('notFilledOut');
+   }
+
+   const validateEmail = email.match(regex.emailRegex);
+
+   if (!validateEmail) {
+      throw Error('noValid');
+   }
    if (user) {
 
       const auth = await compare(password, user.password);
       if (auth) {
          return user;
       }
-      throw Error('The user does not exist');
+
+      throw Error('noAuth');
    }
-   throw Error('The user does not exist');
+
+   throw Error('noUser');
 };
 
 const User = mongoose.model('user', userSchema);

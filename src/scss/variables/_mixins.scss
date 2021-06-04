@@ -95,14 +95,19 @@
   width: $width;
 }
 
-@mixin flexbox() {
+@mixin flexbox($wrap:wrap, ) {
 
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: $wrap;
+  justify-content: flex-end;
 
   @include mQ($small) {
     display: block;
   }
+}
+
+@mixin flex-item($values:6, $width: 1%) {
+  flex-basis: (100 / $values) * $width;
 }
 
 @mixin flex($values:1, $margin:30px) {

@@ -41,6 +41,10 @@ $burgerColorActive: $color-gray-dark;
       margin-right: 10px;
       display: inline-block;
 
+      .flex-item {
+         @include flex-item();
+      }
+
       &.active {
          a {
             color: $color-blue-dark;
