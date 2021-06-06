@@ -28,7 +28,7 @@ const sendToken = (user, statusCode, req, res) => {
 };
 
 //Signup
-module.exports.signup_post = async (req, res) => {
+exports.signup_post = async (req, res) => {
    const { name, email, password } = req.body;
 
    try {
@@ -49,57 +49,35 @@ module.exports.signup_post = async (req, res) => {
 
 
 //Login
-module.exports.login_post = async (req, res) => {
+exports.login_post = async (req, res) => {
    const { email, password } = req.body;
 
    try {
       const user = await User.login(email, password);
-
       sendToken(user, 201, req, res);
 
    } catch (err) {
-
-
       const errors = handleErrors(err);
       res.status(400).json({ errors });
-
    }
 };
 
 //Logout
-
-module.exports.logout = async (req, res) => {
+exports.logout = async (req, res) => {
 
    const expires = new Date(Date.now() + 10000);
-   res.cookie('token', 'expiredtoken', { httpOnly: true, secure: true, maxAge: expires });
-   res.status(200).json({ status: 'Success' });
+   res.cookie('token', 'expiredtoken', { httpOnly: true, secure: true, expires });
+   res.status(200).json({ status: 'user is logged out' });
 };
 
-// //Middleware
+//check if user is logged in
+exports.checkUser = async (req, res) => {
+   try {
+      //Get the currentUser object without the password
+      const currentuser = await User.findById(req.user.id).select('-password');
+      res.json(currentuser);
+   } catch (err) {
+      res.status(500).send('Server Error', err);
+   }
 
-// const decryptJwt = (req, res, next) => {
-//    const token = req.cookies.token;
-//    console.log(req.cookies, 123);
-
-//    if (token) {
-
-//       verify(token, secret, (error) => {
-//          if (error) {
-
-//             res.redirect('./login');
-//          } else {
-
-//             next();
-//          }
-//       });
-//    } else {
-//       res.redirect('./login');
-
-//       return res.status(401).json({
-//          status: 'unauthorized',
-//          message: 'You are not authorized to view this content'
-//       });
-//    }
-//    const decoded = verify(token, secret);
-//    console.log(decoded);
-// };
+};

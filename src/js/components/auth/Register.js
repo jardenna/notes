@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import Form from '@formElements/Form';
-import { signupUrl } from '../../utils/endpoints';
+import { signupUrl, userUrl } from '../../utils/endpoints';
+
 
 const Register = () => {
 
@@ -12,7 +14,21 @@ const Register = () => {
       password2: ''
    };
 
+   let history = useHistory();
 
+
+   const setUserContext = async () => {
+      try {
+         const res = await fetch(userUrl, {
+            credentials: 'include'
+
+         });
+         const data = await res.json();
+         console.log(data);
+      } catch (e) {
+         console.log(e);
+      }
+   };
 
    const [user, setUser] = useState(initialState);
    const [errors, setErrors] = useState({});
@@ -119,6 +135,8 @@ const Register = () => {
             btnText={'Register'}
             onSubmit={onSubmit}
          />
+
+         <button onClick={setUserContext}>klik</button>
       </div>
    );
 };
