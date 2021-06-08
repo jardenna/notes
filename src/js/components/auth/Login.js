@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import Form from '@formElements/Form';
-import { loginUrl } from '../../utils/endpoints';
 
+import AuthContext from '../../state/auth/AuthContext';
 
-const Login = (props) => {
+const Login = () => {
+   const authContext = useContext(AuthContext);
 
    const initialState = {
       email: 'h@h.dk',
@@ -13,11 +14,8 @@ const Login = (props) => {
    };
 
 
-
    const [user, setUser] = useState(initialState);
-
    const [errors, setErrors] = useState({});
-
    const { email, password } = user;
 
    const inputs = [
@@ -60,27 +58,8 @@ const Login = (props) => {
 
    const onSubmit = async (e) => {
       e.preventDefault();
-      try {
-         const res = await fetch(loginUrl, {
-            method: 'POST',
-            credentials: 'include',
-            body: JSON.stringify(user),
-            headers: {
-               'Content-Type': 'application/json'
-            }
-         });
-         const data = await res.json();
+      authContext.login(user);
 
-         if (data.errors) {
-            setErrors(data.errors);
-         } else {
-            setUser(data);
-            props.history.push('/about');
-         }
-
-      } catch (err) {
-         console.log(err);
-      }
       setUser(initialState);
 
    };

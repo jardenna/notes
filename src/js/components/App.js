@@ -7,29 +7,33 @@ import {
 
 
 import Navbar from './layout/Navbar';
-
-
-import About from './pages/About';
+import AuthState from '../state/auth/AuthState';
+import Home from './pages/Home';
 import Register from '@components/auth/Register';
 import Login from '@components/auth/Login';
+import Protected from '@components/pages/Protected';
+import PrivateRoute from '@components/routing/PrivateRoute';
 function App() {
 
    return (
       <React.StrictMode>
-         <Router>
-            <Navbar
-               title='Contact'
-            />
-            <div className="container">
+         <AuthState>
+            <Router>
 
-               <Switch>
+               <Navbar
+                  title='Contact'
+               />
+               <div className="container">
 
-                  <Route path='/about' component={About} />
-                  <Route path='/register' component={Register} />
-                  <Route path='/login' component={Login} />
-               </Switch>
-            </div>
-         </Router>
+                  <Switch>
+                     <Route exact path='/' component={Home} />
+                     <Route path='/register' component={Register} />
+                     <Route path='/login' component={Login} />
+                     <PrivateRoute path='/protected' component={Protected} />
+                  </Switch>
+               </div>
+            </Router>
+         </AuthState>
       </React.StrictMode>
 
    );

@@ -1,30 +1,24 @@
-
+import { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { logoutUrl } from '../../utils/endpoints';
 
+import AuthContext from '../../state/auth/AuthContext';
 
+import { userUrl } from '../../utils/endpoints';
 const Navbar = () => {
+   const authContext = useContext(AuthContext);
+   const { logout, loadUser, user } = authContext;
+   console.log(user);
 
-   const logout = async () => {
-      try {
-         const res = await fetch(logoutUrl,
-            {
-               method: 'GET',
-               credentials: 'include'
+   useEffect(() => {
+      loadUser();
+   }, []);
 
-            });
 
-         const data = await res.json();
-         console.log(data);
-      } catch (e) {
-         console.log(e);
-      }
-   };
    return (
       <header className="main-header">
          <section className="flex-container container">
-            <h1 className="flex-3">
+            <h1 className="flex-item">
                LOGO
             </h1>
             <button className="btn-primary" onClick={logout}>Logout</button>
@@ -33,10 +27,11 @@ const Navbar = () => {
 
 
                   <li className="flex-container">
-                     <Link className="nav-item flex-item" to='/home'>Home</Link>
+                     <Link className="nav-item flex-item" to='/'>Home</Link>
+                     <Link className="nav-item flex-item" to='/protected'>Protected</Link>
                      <Link className="nav-item flex-item" to='/login'>Login</Link>
                      <Link className="nav-item flex-item" to='/register'>Register</Link>
-                     <Link className="nav-item flex-item" to='/about'>About</Link>
+
                   </li>
                </ul>
             </nav>
