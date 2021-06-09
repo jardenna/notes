@@ -65,7 +65,7 @@ exports.login_post = async (req, res) => {
 //Logout
 exports.logout = async (req, res) => {
 
-   const expires = new Date(Date.now() + 10000);
+   const expires = new Date(Date.now() + 1000);
    res.cookie('token', 'expiredtoken', { httpOnly: true, secure: true, expires });
    res.status(200).json({ status: 'user is logged out' });
 };

@@ -4,14 +4,16 @@ import { Link } from 'react-router-dom';
 
 import AuthContext from '../../state/auth/AuthContext';
 
-import { userUrl } from '../../utils/endpoints';
+
 const Navbar = () => {
    const authContext = useContext(AuthContext);
-   const { logout, loadUser, user } = authContext;
-   console.log(user);
+   const { isAuthenticated, logout, loadUser, user } = authContext;
+
 
    useEffect(() => {
+
       loadUser();
+
    }, []);
 
 
@@ -21,6 +23,7 @@ const Navbar = () => {
             <h1 className="flex-item">
                LOGO
             </h1>
+            <h2>{user && user.name}</h2>
             <button className="btn-primary" onClick={logout}>Logout</button>
             <nav className="main-nav flex-item">
                <ul className="nav-wrapper">
@@ -29,8 +32,9 @@ const Navbar = () => {
                   <li className="flex-container">
                      <Link className="nav-item flex-item" to='/'>Home</Link>
                      <Link className="nav-item flex-item" to='/protected'>Protected</Link>
-                     <Link className="nav-item flex-item" to='/login'>Login</Link>
-                     <Link className="nav-item flex-item" to='/register'>Register</Link>
+                     {!isAuthenticated && <Link className="nav-item flex-item" to='/login'>Login</Link>}
+                     {!isAuthenticated && <Link className="nav-item flex-item" to='/register'>Register</Link>}
+
 
                   </li>
                </ul>

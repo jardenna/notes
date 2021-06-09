@@ -1,22 +1,25 @@
 import {
    REGISTER_SUCCESS,
    REGISTER_FAIL,
-   USER_LOADED,
-   AUTH_ERROR,
    LOGIN_SUCCESS,
    LOGIN_FAIL,
-   LOGOUT
+   USER_LOADED,
+   LOGOUT,
+   CLEAR_ERRORS
 
 } from './types';
-
+const errorObj = { name: '', email: '', password: '', noUser: '' };
 export default (state, action) => {
    switch (action.type) {
 
       case USER_LOADED:
+
          return {
             ...state,
             loading: false,
-            user: action.payload
+            errors: errorObj,
+            user: action.payload,
+            isAuthenticated: action.payload._id ? true : false
 
          };
       case REGISTER_SUCCESS:
@@ -25,6 +28,7 @@ export default (state, action) => {
          return {
             ...state,
             ...action.payload,
+            errors: errorObj,
             loading: false,
             isAuthenticated: true
 
@@ -32,19 +36,22 @@ export default (state, action) => {
 
       case REGISTER_FAIL:
       case LOGIN_FAIL:
-      case AUTH_ERROR:
       case LOGOUT:
 
          return {
             ...state,
             user: null,
             loading: false,
-            error: action.payload,
+            errors: action.payload,
             isAuthenticated: false
 
          };
 
-
+      case CLEAR_ERRORS:
+         return {
+            ...state,
+            errors: errorObj
+         };
       default: return state;
    }
 };

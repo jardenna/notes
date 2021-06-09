@@ -1,22 +1,36 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+
 
 import Form from '@formElements/Form';
-
 import AuthContext from '../../state/auth/AuthContext';
 
-const Login = () => {
+const Login = (props) => {
    const authContext = useContext(AuthContext);
+
+
+   const { errors, login, isAuthenticated, clearErr } = authContext;
 
    const initialState = {
       email: 'h@h.dk',
       password: 'Test123'
 
    };
+   const history = useHistory();
+   useEffect(() => {
 
+      if (isAuthenticated) {
+         history.push('/');
+      }
+      clearErr();
+
+   }, [isAuthenticated, history]);
 
    const [user, setUser] = useState(initialState);
-   const [errors, setErrors] = useState({});
+
+
    const { email, password } = user;
+
 
    const inputs = [
 
@@ -46,7 +60,6 @@ const Login = () => {
 
    ];
 
-
    const onChange = (e) => {
       const { name, value } = e.target;
 
@@ -58,7 +71,7 @@ const Login = () => {
 
    const onSubmit = async (e) => {
       e.preventDefault();
-      authContext.login(user);
+      login(user);
 
       setUser(initialState);
 
@@ -68,7 +81,7 @@ const Login = () => {
    return (
       <div>
          <h1>Account Login</h1>
-         <div>{errors.noUser}</div>
+
          <Form
             inputs={inputs}
             onChange={onChange}

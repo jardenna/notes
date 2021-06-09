@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Form from '@formElements/Form';
-import { signupUrl } from '../../utils/endpoints';
 
 
+import AuthContext from '../../state/auth/AuthContext';
 const Register = () => {
 
    const initialState = {
@@ -14,11 +14,24 @@ const Register = () => {
       password2: ''
    };
 
-   let history = useHistory();
+
+   const authContext = useContext(AuthContext);
+
+   const { register, errors, clearErr, isAuthenticated } = authContext;
+   const history = useHistory();
+
+   useEffect(() => {
+
+      if (isAuthenticated) {
+         history.push('/');
+      }
+      clearErr();
+
+   }, [isAuthenticated, history]);
+
+
 
    const [user, setUser] = useState(initialState);
-   const [errors, setErrors] = useState({});
-
    const { name, email, password, password2 } = user;
 
    const confirmPasswordErr = password !== password2 ? 'The password does not match' : null;
@@ -88,28 +101,7 @@ const Register = () => {
 
    const onSubmit = async (e) => {
       e.preventDefault();
-      try {
-         const res = await fetch(signupUrl, {
-            method: 'POST',
-            credentials: 'include',
-            body: JSON.stringify(user),
-            headers: {
-               'Content-Type': 'application/json'
-            }
-         });
-         const data = await res.json();
-         if (data.errors) {
-            setErrors(data.errors);
-         } else {
-            setUser(data);
-            setErrors({});
-         }
-
-      } catch (err) {
-         console.log(err);
-      }
-      setUser(initialState);
-
+      register(user);
    };
 
    return (
@@ -121,8 +113,6 @@ const Register = () => {
             btnText={'Register'}
             onSubmit={onSubmit}
          />
-
-
       </div>
    );
 };
