@@ -106,12 +106,13 @@ const Register = () => {
 
    return (
       <div>
-         <h1>Account Register</h1>
+         <h1>Signup</h1>
          <Form
             inputs={inputs}
             onChange={onChange}
             btnText={'Register'}
             onSubmit={onSubmit}
+
          />
       </div>
    );

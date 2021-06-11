@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 
@@ -11,37 +11,42 @@ const Navbar = () => {
 
 
    useEffect(() => {
-
       loadUser();
-
    }, []);
 
+   const guestLinks = (
+      <>
+         <li className="nav-item flex-item"><Link className="nav-item flex-item" to='/login'>Login</Link></li>
+         <li className="nav-item flex-item"> <Link className="nav-item flex-item" to='/register'>Register</Link></li>
+
+      </>
+   );
+
+   const authLinks = (
+      <>
+         <li className="nav-item flex-item">Welcome {user && user.name}</li>
+         <li className="nav-item flex-item"> <button className="btn-primary" onClick={logout}>Logout</button></li>
+
+      </>
+   );
 
    return (
-      <header className="main-header">
-         <section className="flex-container container">
-            <h1 className="flex-item">
-               LOGO
-            </h1>
-            <h2>{user && user.name}</h2>
-            <button className="btn-primary" onClick={logout}>Logout</button>
-            <nav className="main-nav flex-item">
-               <ul className="nav-wrapper">
+
+      <nav className="main-nav flex-item">
+
+         <ul className="nav-wrapper flex-container">
+
+            <li className="nav-item flex-item">
+               <Link to='/'>Home</Link>
+            </li>
+
+            <li className="nav-item flex-item"> <Link to='/protected'>Protected</Link></li>
+            {isAuthenticated ? authLinks : guestLinks}
 
 
-                  <li className="flex-container">
-                     <Link className="nav-item flex-item" to='/'>Home</Link>
-                     <Link className="nav-item flex-item" to='/protected'>Protected</Link>
-                     {!isAuthenticated && <Link className="nav-item flex-item" to='/login'>Login</Link>}
-                     {!isAuthenticated && <Link className="nav-item flex-item" to='/register'>Register</Link>}
+         </ul>
+      </nav>
 
-
-                  </li>
-               </ul>
-            </nav>
-         </section>
-
-      </header>
 
    );
 };

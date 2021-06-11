@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 
 
-import Navbar from './layout/Navbar';
+import Header from './layout/Header';
 import AuthState from '../state/auth/AuthState';
 import Home from './pages/Home';
 import Register from '@components/auth/Register';
@@ -20,9 +20,7 @@ function App() {
          <AuthState>
             <Router>
 
-               <Navbar
-                  title='Contact'
-               />
+               <Header />
                <div className="container">
 
                   <Switch>

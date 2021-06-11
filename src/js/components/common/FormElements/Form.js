@@ -12,7 +12,7 @@ function Form(props) {
 
 	const { btnVaiant, btnText, onSubmit, className, inputs, onChange, onClearAll, current } = props;
 
-	const btnClass = `btn-${btnVaiant ? btnVaiant : props.btnVaiant}`;
+	const btnClass = `btn-${btnVaiant ? btnVaiant : 'primary'}`;
 
 	return (
 		<Fragment>

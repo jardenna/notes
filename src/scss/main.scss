@@ -22,7 +22,8 @@ h2 {
 }
 
 a {
-  color: $color-primary-link;
+  color: $color-gray-dark;
+  text-decoration: none;
 
   &:focus {
     outline: var(--focus);
@@ -30,7 +31,7 @@ a {
   }
 
   &:hover {
-    text-decoration: none;
+    text-decoration: underline;
   }
 }
 
@@ -39,10 +40,15 @@ a {
 }
 
 .container {
-  max-width: 1500px;
+  max-width: 1300px;
   margin: 0 auto;
   padding: 20px;
 
+}
+
+form {
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .not-found-container {
