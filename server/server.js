@@ -4,7 +4,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
 const authRoutes = require('./routes/authRoutes');
-const viewRouter = require('./routes/viewRouter');
+
 
 
 const app = express();
@@ -33,7 +33,7 @@ app.use(express.json({ extended: false }));
 
 //Get Routes
 app.use(authRoutes);
-//app.use(viewRouter);
+
 
 
 

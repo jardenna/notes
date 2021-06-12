@@ -2,8 +2,6 @@ import { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Form from '@formElements/Form';
-
-
 import AuthContext from '../../state/auth/AuthContext';
 const Register = () => {
 
@@ -13,7 +11,6 @@ const Register = () => {
       password: '',
       password2: ''
    };
-
 
    const authContext = useContext(AuthContext);
 
@@ -45,7 +42,6 @@ const Register = () => {
          isRequired: true,
          value: name,
          error: errors.name
-
       },
       {
          type: 'email',
@@ -56,8 +52,6 @@ const Register = () => {
          isRequired: true,
          value: email,
          error: errors.email
-
-
       },
 
       {
@@ -69,10 +63,7 @@ const Register = () => {
          isRequired: true,
          value: password,
          error: errors.password
-
-
       },
-
       {
          type: 'password',
          name: 'password2',
@@ -82,13 +73,12 @@ const Register = () => {
          isRequired: true,
          value: password2,
          error: confirmPasswordErr
-
-
       }
-
    ];
 
-
+   const onClearAll = () => {
+      setUser(initialState);
+   };
    const onChange = (e) => {
       const { name, value } = e.target;
 
@@ -112,7 +102,8 @@ const Register = () => {
             onChange={onChange}
             btnText={'Register'}
             onSubmit={onSubmit}
-
+            onClearAll={onClearAll}
+            current
          />
       </div>
    );

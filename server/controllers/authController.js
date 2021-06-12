@@ -20,36 +20,27 @@ const createToken = (id) => {
 
 const sendToken = (user, statusCode, req, res) => {
    const token = createToken(user._id);
-
-
    res.cookie('token', token, { httpOnly: true, secure: true, maxAge: maxAge * 1000 });
-   //user.password = undefined;
    res.status(statusCode).json({ statusCode: 'success', token, user });
 };
 
 //Signup
-exports.signup_post = async (req, res) => {
+exports.signup = async (req, res) => {
    const { name, email, password } = req.body;
 
    try {
       const user = await User.create({ name, email, password });
       sendToken(user, 201, req, res);
-
    }
    catch (err) {
-
       const errors = handleErrors(err);
-
       res.status(400).json({ errors });
    }
 
 };
 
-
-
-
 //Login
-exports.login_post = async (req, res) => {
+exports.login = async (req, res) => {
    const { email, password } = req.body;
 
    try {
