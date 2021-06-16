@@ -9,7 +9,9 @@ import {
    INPUT_BLUR
 
 } from './types';
-const errorObj = { name: '', email: '', password: '', noUser: '' };
+
+import { errorObj } from '../utils';
+
 export default (state, action) => {
    switch (action.type) {
       case INPUT_BLUR:

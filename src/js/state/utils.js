@@ -1,0 +1,1 @@
+export const errorObj = { name: '', email: '', password: '', password2: '', noUser: '' };

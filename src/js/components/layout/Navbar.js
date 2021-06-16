@@ -13,13 +13,14 @@ const Navbar = () => {
    const history = useHistory();
 
    useEffect(() => {
+      if (!isAuthenticated) {
+         history.push('/login');
+      }
       loadUser();
-   }, []);
 
-   const logOut = () => {
-      logout();
-      history.push('/login');
-   };
+   }, [isAuthenticated, history]);
+
+
 
    const guestLinks = (
       <>
@@ -32,7 +33,7 @@ const Navbar = () => {
    const authLinks = (
       <>
          <li className="nav-item flex-item">Welcome {user && user.name}</li>
-         <li className="nav-item flex-item"> <button className="btn-primary" onClick={logOut}>Logout</button></li>
+         <li className="nav-item flex-item"> <button className="btn-primary" onClick={logout}>Logout</button></li>
 
       </>
    );

@@ -28,9 +28,10 @@ const Register = () => {
 
 
    const [user, setUser] = useState(initialState);
+   const [passwordErr, setPasswordErr] = useState('');
    const { name, email, password, password2 } = user;
 
-   const confirmPasswordErr = password !== password2 ? 'The password does not match' : null;
+   const equalPasswords = password === password2;
    const inputs = [
       {
          type: 'text',
@@ -71,7 +72,7 @@ const Register = () => {
          label: 'Confirm password',
          isRequired: true,
          value: password2,
-         error: confirmPasswordErr
+         error: passwordErr
       }
    ];
 
@@ -91,11 +92,20 @@ const Register = () => {
    const onBlur = (e) => {
       const { name } = e.target;
       blur(name);
-   };
 
+      if (!equalPasswords) {
+         setPasswordErr('The password does not match');
+      } else {
+         setPasswordErr('');
+      }
+
+   };
    const onSubmit = async (e) => {
       e.preventDefault();
-      register(user);
+      if (equalPasswords) {
+         register(user);
+      }
+
    };
 
    return (

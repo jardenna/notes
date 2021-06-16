@@ -17,8 +17,8 @@ import {
 
 } from './types';
 
+import { errorObj } from '../utils';
 const AuthState = (props) => {
-   const errorObj = { name: '', email: '', password: '', noUser: '' };
    const initialState = {
       isAuthenticated: false,
       loading: true,
