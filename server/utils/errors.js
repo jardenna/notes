@@ -21,9 +21,11 @@ const handleErrors = (err) => {
       errors.email = 'Please enter a valid email';
    }
    //LOGIN EmptyFields
-   if (err.message === 'notFilledOut') {
+   if (err.message === 'noEmail') {
       errors.email = 'Please fill out email';
-      errors.password = 'Please fill out password';
+   }
+   if (err.message === 'noPassword') {
+      errors.password = 'Please fill out Password';
    }
 
 

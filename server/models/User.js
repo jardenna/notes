@@ -34,8 +34,11 @@ userSchema.statics.login = async function (email, password) {
    const user = await this.findOne({ email });
 
 
-   if (email === '' || password === '') {
-      throw Error('notFilledOut');
+   if (email === '') {
+      throw Error('noEmail');
+   }
+   if (password === '') {
+      throw Error('noPassword');
    }
 
    const validateEmail = email.match(regex.emailRegex);

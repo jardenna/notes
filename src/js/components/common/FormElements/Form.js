@@ -5,12 +5,9 @@ import Input from '@formElements/Input';
 import TextArea from '@formElements/TextArea';
 import Button from '@commonReact/Button';
 
-
-
 function Form(props) {
 
-
-	const { btnVaiant, btnText, onSubmit, className, inputs, onChange, onClearAll, current } = props;
+	const { btnVaiant, btnText, onSubmit, className, inputs, onChange, onClearAll, clearBtn, onBlur } = props;
 
 	const btnClass = `btn-${btnVaiant ? btnVaiant : 'primary'}`;
 
@@ -34,6 +31,7 @@ function Form(props) {
 									previewClassName={input.previewClassName}
 									onChange={onChange}
 									checked={input.checked}
+									onBlur={onBlur}
 								/> :
 									<TextArea
 										name={input.name}
@@ -57,7 +55,7 @@ function Form(props) {
 						className={btnClass}
 						btnText={btnText}
 					/>
-					{current && <Button
+					{clearBtn && <Button
 						className={btnClass}
 						btnText={'Clear'}
 						onClick={onClearAll}

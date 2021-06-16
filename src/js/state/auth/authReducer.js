@@ -5,13 +5,19 @@ import {
    LOGIN_FAIL,
    USER_LOADED,
    LOGOUT,
-   CLEAR_ERRORS
+   CLEAR_ERRORS,
+   INPUT_BLUR
 
 } from './types';
 const errorObj = { name: '', email: '', password: '', noUser: '' };
 export default (state, action) => {
    switch (action.type) {
+      case INPUT_BLUR:
 
+         return {
+            ...state,
+            bluredError: action.payload
+         };
       case USER_LOADED:
 
          return {

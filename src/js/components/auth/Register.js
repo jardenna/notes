@@ -14,7 +14,7 @@ const Register = () => {
 
    const authContext = useContext(AuthContext);
 
-   const { register, errors, clearErr, isAuthenticated } = authContext;
+   const { register, errors, clearErr, isAuthenticated, blur } = authContext;
    const history = useHistory();
 
    useEffect(() => {
@@ -25,7 +25,6 @@ const Register = () => {
       clearErr();
 
    }, [isAuthenticated, history]);
-
 
 
    const [user, setUser] = useState(initialState);
@@ -89,6 +88,11 @@ const Register = () => {
    };
 
 
+   const onBlur = (e) => {
+      const { name } = e.target;
+      blur(name);
+   };
+
    const onSubmit = async (e) => {
       e.preventDefault();
       register(user);
@@ -103,7 +107,8 @@ const Register = () => {
             btnText={'Register'}
             onSubmit={onSubmit}
             onClearAll={onClearAll}
-            current
+            clearBtn
+            onBlur={onBlur}
          />
       </div>
    );

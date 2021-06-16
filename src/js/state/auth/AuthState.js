@@ -12,7 +12,8 @@ import {
    LOGIN_FAIL,
    USER_LOADED,
    LOGOUT,
-   CLEAR_ERRORS
+   CLEAR_ERRORS,
+   INPUT_BLUR
 
 } from './types';
 
@@ -22,24 +23,34 @@ const AuthState = (props) => {
       isAuthenticated: false,
       loading: true,
       user: null,
-      errors: errorObj
+      errors: errorObj,
+      bluredError: ''
    };
 
    const [state, dispatch] = useReducer(authReducer, initialState);
 
+   //Blur error
+   const blur = (name) => {
+      dispatch({
+         type: INPUT_BLUR,
+         payload: delete errors[name]
+      });
+   };
 
    //Load user
    const loadUser = async () => {
 
       const data = await fetchApi('get', userUrl);
+      if (data) {
 
-      if (data.errors) {
-         dispatch({ type: LOGIN_FAIL, payload: data.errors });
+         if (data.errors) {
+            dispatch({ type: LOGIN_FAIL, payload: data.errors });
+         }
+         dispatch({
+            type: USER_LOADED,
+            payload: data
+         });
       }
-      dispatch({
-         type: USER_LOADED,
-         payload: data
-      });
    };
 
    // Register a user
@@ -65,7 +76,6 @@ const AuthState = (props) => {
    // Login User
    const login = async (formData) => {
       const data = await fetchApi('post', loginUrl, formData);
-
       if (!data.errors) {
 
          dispatch({
@@ -114,7 +124,8 @@ const AuthState = (props) => {
       clearErr,
       loadUser,
       login,
-      logout
+      logout,
+      blur
    };
 
    return (

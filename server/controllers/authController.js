@@ -21,7 +21,7 @@ const createToken = (id) => {
 const sendToken = (user, statusCode, req, res) => {
    const token = createToken(user._id);
    res.cookie('token', token, { httpOnly: true, secure: true, maxAge: maxAge * 1000 });
-   res.status(statusCode).json({ statusCode: 'success', token, user });
+   res.status(statusCode).json({ statusCode: 'success', user });
 };
 
 //Signup
@@ -58,7 +58,7 @@ exports.logout = async (req, res) => {
 
    const expires = new Date(Date.now() + 1000);
    res.cookie('token', 'expiredtoken', { httpOnly: true, secure: true, expires });
-   res.status(200).json({ status: 'user is logged out' });
+   res.status(200).json({ status: 'User is logged out' });
 };
 
 //check if user is logged in

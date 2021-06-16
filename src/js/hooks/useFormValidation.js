@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
 
-const useFormValidation = (initialState = {}, callback) => {
+const useFormValidation = (initialState, callback) => {
    const [values, setValues] = useState(initialState);
 
    const onClearAll = () => {
       setValues(initialState);
    };
-   const onChange = (e) => {
+   const onChanges = (e) => {
       const { name, value } = e.target;
 
       setValues({
@@ -16,13 +16,12 @@ const useFormValidation = (initialState = {}, callback) => {
       });
    };
 
-
    const onSubmit = async (e) => {
       e.preventDefault();
-      callback();
+      callback(values);
    };
 
-   return { values, onClearAll, onChange, onSubmit };
+   return { values, onClearAll, onChanges, onSubmit };
 };
 
 export default useFormValidation;

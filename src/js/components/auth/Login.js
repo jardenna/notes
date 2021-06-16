@@ -1,22 +1,22 @@
-import { useState, useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-
 import Form from '@formElements/Form';
+import useFormValidation from '@hooks/useFormValidation';
 import AuthContext from '../../state/auth/AuthContext';
 
-const Login = (props) => {
+const Login = () => {
    const authContext = useContext(AuthContext);
 
-
-   const { errors, login, isAuthenticated, clearErr } = authContext;
-
+   const { errors, login, isAuthenticated, clearErr, blur } = authContext;
    const initialState = {
-      email: 'h@h.dk',
-      password: 'Test123'
+      email: '',
+      password: ''
 
    };
    const history = useHistory();
+   const { values, onClearAll, onChanges, onSubmit } = useFormValidation(initialState, login);
+   const { email, password } = values;
    useEffect(() => {
 
       if (isAuthenticated) {
@@ -25,12 +25,6 @@ const Login = (props) => {
       clearErr();
 
    }, [isAuthenticated, history]);
-
-   const [user, setUser] = useState(initialState);
-
-
-   const { email, password } = user;
-
 
    const inputs = [
 
@@ -59,34 +53,22 @@ const Login = (props) => {
       }
 
    ];
-
-   const onChange = (e) => {
-      const { name, value } = e.target;
-
-      setUser({
-         ...user,
-         [name]: value
-      });
+   const onBlur = (e) => {
+      const { name } = e.target;
+      blur(name);
    };
-
-   const onSubmit = async (e) => {
-      e.preventDefault();
-      login(user);
-
-      setUser(initialState);
-
-   };
-
-
    return (
       <div>
          <h1>Login</h1>
 
          <Form
             inputs={inputs}
-            onChange={onChange}
+            onChange={onChanges}
             btnText={'Login'}
             onSubmit={onSubmit}
+            onClearAll={onClearAll}
+            onBlur={onBlur}
+            clearBtn
          />
       </div>
    );

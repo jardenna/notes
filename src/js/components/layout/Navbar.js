@@ -1,5 +1,6 @@
 import { useContext, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 
 import AuthContext from '../../state/auth/AuthContext';
@@ -9,10 +10,16 @@ const Navbar = () => {
    const authContext = useContext(AuthContext);
    const { isAuthenticated, logout, loadUser, user } = authContext;
 
+   const history = useHistory();
 
    useEffect(() => {
       loadUser();
    }, []);
+
+   const logOut = () => {
+      logout();
+      history.push('/login');
+   };
 
    const guestLinks = (
       <>
@@ -25,7 +32,7 @@ const Navbar = () => {
    const authLinks = (
       <>
          <li className="nav-item flex-item">Welcome {user && user.name}</li>
-         <li className="nav-item flex-item"> <button className="btn-primary" onClick={logout}>Logout</button></li>
+         <li className="nav-item flex-item"> <button className="btn-primary" onClick={logOut}>Logout</button></li>
 
       </>
    );
