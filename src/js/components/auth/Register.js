@@ -93,11 +93,6 @@ const Register = () => {
       const { name } = e.target;
       blur(name);
 
-      if (!equalPasswords) {
-         setPasswordErr('The password does not match');
-      } else {
-         setPasswordErr('');
-      }
 
    };
    const onSubmit = async (e) => {
@@ -105,6 +100,12 @@ const Register = () => {
       if (equalPasswords) {
          register(user);
       }
+      if (!equalPasswords) {
+         setPasswordErr('The password does not match');
+      } else {
+         setPasswordErr('');
+      }
+
 
    };
 

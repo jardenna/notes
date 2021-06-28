@@ -13,7 +13,7 @@ const handleErrors = (err) => {
    }
    //LOGIN No auth
    if (err.message === 'noAuth') {
-      errors.noUser = 'Access denied';
+      errors.noUser = 'Wrong password';
    }
 
    //LOGIN Not a valid email

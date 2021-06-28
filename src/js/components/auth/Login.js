@@ -12,7 +12,6 @@ const Login = () => {
    const initialState = {
       email: '',
       password: ''
-
    };
    const history = useHistory();
    const { values, onClearAll, onChanges, onSubmit } = useFormValidation(initialState, login);
@@ -60,7 +59,7 @@ const Login = () => {
    return (
       <div>
          <h1>Login</h1>
-
+         {errors.noUser}
          <Form
             inputs={inputs}
             onChange={onChanges}
