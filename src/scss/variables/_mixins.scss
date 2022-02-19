@@ -4,7 +4,7 @@
   }
 }
 
-@mixin arrow($size: 20px, $color:green) {
+@mixin arrow($size: 20px, $color: green) {
   width: 0;
   height: 0;
   border: solid transparent;
@@ -18,7 +18,7 @@
   border-radius: $size / 2;
 }
 
-@mixin triangle($size:20px, $color:$color-primary-link, $dir:up) {
+@mixin triangle($size: 20px, $color: $color-primary-link, $dir: up) {
   position: absolute;
   width: 0;
   height: 0;
@@ -27,22 +27,16 @@
 
   @if $dir==down {
     border-top-color: $color;
-  }
-
-  @else if $dir==up {
+  } @else if $dir==up {
     border-bottom-color: $color;
-  }
-
-  @else if $dir==left {
+  } @else if $dir==left {
     border-left-color: $color;
-  }
-
-  @else if $dir==right {
+  } @else if $dir==right {
     border-right-color: $color;
   }
 }
 
-@mixin chevron($size: 7px, $weight:1px, $color:$color-gray-dark, $dir:up) {
+@mixin chevron($size: 7px, $weight: 1px, $color: $color-gray-dark, $dir: up) {
   width: $size;
   height: $size;
   border: $weight solid $color;
@@ -53,50 +47,40 @@
   @if $dir==up {
     border-bottom: transparent;
     border-right: transparent;
-  }
-
-  @else if $dir==down {
+  } @else if $dir==down {
     border-top: transparent;
     border-left: transparent;
-  }
-
-  @else if $dir==right {
+  } @else if $dir==right {
     border-bottom: transparent;
     border-left: transparent;
-  }
-
-  @else if $dir==left {
+  } @else if $dir==left {
     border-top: transparent;
     border-right: transparent;
   }
 }
 
-@mixin border($direction, $color:$color-border) {
+@mixin border($direction, $color: $color-border) {
   border-#{$direction}: 1px solid $color;
 }
 
 @mixin borderRadius($top: 2px, $right: 2px, $bottom: 2px, $left: 2px) {
-
   border-radius: $top $right $bottom $left;
 }
 
-@mixin rotate($deg:45deg) {
-
+@mixin rotate($deg: 45deg) {
   transform: rotate($deg);
 }
 
 @mixin opacity($opacity: 0.8) {
-
   filter: alpha(opacity=80);
 }
 
-@mixin inline ($width:50%) {
+@mixin inline($width: 50%) {
   display: inline-block;
   width: $width;
 }
 
-@mixin flexbox($wrap:wrap, ) {
-
+@mixin flexbox($wrap: wrap) {
   display: flex;
   flex-wrap: $wrap;
   justify-content: flex-end;
@@ -106,17 +90,10 @@
   }
 }
 
-@mixin flex-item($values:6, $width: 1%) {
-  flex-basis: (100 / $values) * $width;
-}
-
-@mixin flex($values:1, $margin:30px) {
-
+@mixin flex($values: 1, $margin: 30px) {
   flex: $values;
   margin-right: $margin;
   position: relative;
-
-
 
   &:last-child {
     margin-right: 0;
@@ -132,12 +109,11 @@
   }
 }
 
-@mixin transition($what: all, $time: .2s, $how: ease-in-out) {
-
+@mixin transition($what: all, $time: 0.2s, $how: ease-in-out) {
   transition: $what $time $how;
 }
 
-@mixin inline-item ($width:48%, $v-align:top, $margin:10px) {
+@mixin inline-item($width: 48%, $v-align: top, $margin: 10px) {
   display: inline-block;
   width: $width;
   vertical-align: $v-align;

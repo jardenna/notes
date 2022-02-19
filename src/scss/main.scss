@@ -2,7 +2,6 @@
   box-sizing: border-box;
 }
 
-
 :root {
   --focus: 1px dotted #000000;
 }
@@ -43,7 +42,6 @@ a {
   max-width: 1300px;
   margin: 0 auto;
   padding: 20px;
-
 }
 
 form {
@@ -73,13 +71,12 @@ form {
 }
 
 .flex-item {
-  @include flex();
+  //@include flex();
 }
-
 .flex-2 {
-  @include flex($values:2);
+  @include flex($values: 2);
 }
 
 .flex-3 {
-  @include flex($values:3);
+  @include flex($values: 3);
 }

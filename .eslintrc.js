@@ -1,18 +1,17 @@
-
 module.exports = {
   parser: '@babel/eslint-parser',
   env: {
     browser: true,
     es6: true,
-    node: true
+    node: true,
   },
   extends: ['eslint:recommended', 'plugin:react/recommended'],
   parserOptions: {
     ecmaFeatures: {
       experimentalObjectRestSpread: true,
-      jsx: true
+      jsx: true,
     },
-    sourceType: 'module'
+    sourceType: 'module',
   },
   plugins: ['react'],
   rules: {
@@ -27,15 +26,17 @@ module.exports = {
     'react/sort-comp': 1,
 
     'linebreak-style': ['off'],
-    'eqeqeq': 'error',
-    'comma-dangle': 1,
+    eqeqeq: 'error',
+    'comma-dangle': 0,
     'no-extra-semi': 1,
     'no-undef': 1,
     'no-unused-vars': 1,
-    'no-warning-comments': ['error', { 'terms': ['todo', 'fixme', 'any other term'], 'location': 'anywhere' }],
+    'no-warning-comments': [
+      'error',
+      { terms: ['todo', 'fixme', 'any other term'], location: 'anywhere' },
+    ],
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
-    'no-console': ['warn', { allow: ['info', 'error'] }]
-
-  }
+    'no-console': ['warn', { allow: ['info', 'error'] }],
+  },
 };
