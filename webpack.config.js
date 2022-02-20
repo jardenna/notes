@@ -30,7 +30,7 @@ if (prodMode) {
 
 module.exports = {
   entry: {
-    app: './src/js/index.js',
+    app: './src/tsx/index',
   },
   output: {
     // output path is required for `clean-webpack-plugin`
@@ -78,9 +78,6 @@ module.exports = {
 
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
-    alias: {
-      Components: path.resolve(__dirname, 'src/js/components/'),
-    },
   },
 
   plugins,
