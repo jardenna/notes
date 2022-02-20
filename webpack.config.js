@@ -65,6 +65,11 @@ module.exports = {
         },
       },
       {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
         test: /\.(png|jpe?g|gif|svg)$/i,
         type: 'asset',
       },
@@ -72,6 +77,7 @@ module.exports = {
   },
 
   resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
     alias: {
       Components: path.resolve(__dirname, 'src/js/components/'),
     },
