@@ -25,7 +25,6 @@ const EmojiPicker: FC<EmojiPickerProps> = ({ onSelect }) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: 'transparent',
         }}
       >
         ej
@@ -34,6 +33,8 @@ const EmojiPicker: FC<EmojiPickerProps> = ({ onSelect }) => {
         <div
           style={{
             position: 'absolute',
+            zIndex: '200',
+
             top: `${dimensions.current.bottom + 10}px`,
             left: `${dimensions.current.left}px`,
           }}

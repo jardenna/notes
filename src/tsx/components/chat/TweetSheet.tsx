@@ -9,16 +9,17 @@ function TweetSheet() {
   const [text, setText] = useState('');
 
   const textAreaRef = useRef() as React.MutableRefObject<any>;
-  const [tweets, setTweets] = useState<string[]>([]); // array of object of shape {text: '', images: []}
-  const insertAtPos = (value: { native: any }) => {
-    const { current: taRef } = textAreaRef;
-    let startPos = taRef.selectionStart;
-    let endPos = taRef.selectionEnd;
-    setText(
-      taRef.value.substring(0, startPos) +
-        value.native +
-        taRef.value.substring(endPos, taRef.value.length)
-    );
+  const [tweets, setTweets] = useState<string[]>([]);
+  const insertAtPos = (value: { native: string }) => {
+    const { current } = textAreaRef;
+    const startPos = current.selectionStart;
+    const endPos = current.selectionEnd;
+    const inputText =
+      current.value.substring(0, startPos) +
+      value.native +
+      current.value.substring(endPos, current.value.length);
+
+    setText(inputText);
   };
   const onClickTweet = () => {
     if (text) {
