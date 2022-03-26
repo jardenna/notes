@@ -5,6 +5,7 @@ import Form from '../common/FormElements/Form';
 import useFormValidation from '../../hooks/useFormValidation';
 import AuthContext from '../../state/auth/AuthContext';
 import { BlurEventType } from '../../interfaces/events';
+import TweetSheet from '../chat/TweetSheet';
 
 export type InitState = {
   email: string;
@@ -62,9 +63,23 @@ const Login: FC = () => {
     const { name } = e.target;
     blur(name);
   };
+
   return (
     <div>
       <h1>Login</h1>
+      <div
+        style={{
+          display: 'flex',
+          flex: 1,
+          height: '100%',
+          width: '100%',
+          flexDirection: 'column',
+          alignItems: 'center',
+          overflow: 'scroll',
+        }}
+      >
+        <TweetSheet />
+      </div>
       {errors.noUser}
       <Form
         inputs={inputs}
