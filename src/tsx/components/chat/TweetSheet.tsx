@@ -1,26 +1,30 @@
 import { useRef, useState } from 'react';
-import 'emoji-mart/css/emoji-mart.css';
+
+import Picker from 'emoji-picker-react';
 
 import Tweet from './Tweet';
-
-import EmojiPicker from './EmojiPicker';
 
 function TweetSheet() {
   const [text, setText] = useState('');
 
-  const textAreaRef = useRef() as React.MutableRefObject<any>;
-  const [tweets, setTweets] = useState<string[]>([]);
-  const insertAtPos = (value: { native: string }) => {
+  const onEmojiClick = (event: any, emojiObject: { emoji: string }) => {
     const { current } = textAreaRef;
     const startPos = current.selectionStart;
     const endPos = current.selectionEnd;
+
+    //&#x1F600
+
     const inputText =
       current.value.substring(0, startPos) +
-      value.native +
+      emojiObject.emoji +
       current.value.substring(endPos, current.value.length);
 
     setText(inputText);
   };
+
+  const textAreaRef = useRef() as React.MutableRefObject<any>;
+  const [tweets, setTweets] = useState<string[]>([]);
+
   const onClickTweet = () => {
     if (text) {
       setTweets([text]);
@@ -73,8 +77,13 @@ function TweetSheet() {
             marginTop: '20px',
           }}
         >
-          <EmojiPicker onSelect={insertAtPos} />
-
+          <Picker
+            onEmojiClick={onEmojiClick}
+            groupVisibility={{
+              flags: false,
+              recently_used: false,
+            }}
+          />
           <div
             style={{
               flex: 1,
@@ -85,7 +94,7 @@ function TweetSheet() {
             }}
           >
             <button onClick={onClickTweet} style={{ fontSize: '20px' }}>
-              Tweet
+              <img src="https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/1f600.png" />
             </button>
           </div>
         </div>
