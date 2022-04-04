@@ -1,0 +1,30 @@
+{
+  "Console info": {
+    "prefix": "ci",
+    "body": "console.info($1);",
+    "description": "Console info"
+  },
+  "Typescript React Component": {
+    "prefix": "tafe",
+    "body": [
+      "import { FC } from 'react';",
+      "interface ${TM_FILENAME_BASE}Props {",
+      " $2",
+      "}",
+      "const ${TM_FILENAME_BASE}: FC<${TM_FILENAME_BASE}Props> = (${3}) => {",
+      "    return <div>${4}</div> ",
+      "};",
+      "export default ${TM_FILENAME_BASE};"
+    ],
+    "description": "Typescript React Component"
+  },
+  "Array Method": {
+    "prefix": "arrmth",
+    "body": [
+      "${1|.forEach,.map,filter,find,reduce,some,every|}((${2:item}) => {",
+      "  ${3:item}",
+      "})"
+    ],
+    "description": "Array Method"
+  }
+}
