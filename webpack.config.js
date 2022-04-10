@@ -15,7 +15,7 @@ const plugins = [
     filename: !prodMode ? '[name].css' : '[name].[contenthash].css',
   }),
   new HtmlWebpackPlugin({
-    template: './src/index.html',
+    template: './public/index.html',
     favicon: './public/favicon.ico',
   }),
 ];
