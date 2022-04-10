@@ -1,20 +1,14 @@
-import '../scss/style.scss';
-import React from 'react';
-import { render } from 'react-dom';
+import './scss/style.scss';
 
+import { render } from 'react-dom';
 
 import App from './components/App';
 
 const wrapper = document.getElementById('root');
-render(
-   <App />,
-   wrapper
-);
+render(<App />, wrapper);
 
 //------------------------------------
 
 if (module && module.hot) {
-   module.hot.accept();
+  module.hot.accept();
 }
-
-

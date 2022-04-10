@@ -30,7 +30,7 @@ if (prodMode) {
 
 module.exports = {
   entry: {
-    app: './src/tsx/index',
+    app: './src/index',
   },
   output: {
     // output path is required for `clean-webpack-plugin`

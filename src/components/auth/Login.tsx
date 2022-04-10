@@ -5,7 +5,6 @@ import Form from '../common/FormElements/Form';
 import useFormValidation from '../../hooks/useFormValidation';
 import AuthContext from '../../state/auth/AuthContext';
 import { BlurEventType } from '../../interfaces/events';
-import TweetSheet from '../chat/TweetSheet';
 
 export type InitState = {
   email: string;
@@ -77,9 +76,7 @@ const Login: FC = () => {
           alignItems: 'center',
           overflow: 'scroll',
         }}
-      >
-        <TweetSheet />
-      </div>
+      ></div>
       {errors.noUser}
       <Form
         inputs={inputs}
