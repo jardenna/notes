@@ -4,10 +4,11 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './layout/Header';
 import AuthState from '../state/auth/AuthState';
 import Home from './pages/Home';
-import Register from './auth/Register';
+
 import Login from './auth/Login';
 import { Provider } from 'react-redux';
 import { store } from '../app/store';
+import { PageId } from '../types/types';
 
 function App() {
   return (
@@ -21,9 +22,12 @@ function App() {
                 <Route exact path="/" render={() => <Home id="home" />} />
                 <Route
                   path="/register"
-                  render={() => <Register id="register" />}
+                  render={() => <Login id={PageId.Register} title="Register" />}
                 />
-                <Route path="/login" render={() => <Login id="login" />} />
+                <Route
+                  path="/login"
+                  render={() => <Login id={PageId.Login} title="Login" />}
+                />
               </Switch>
             </div>
           </Router>

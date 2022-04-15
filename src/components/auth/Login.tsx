@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Form from '../common/FormElements/Form';
@@ -7,22 +7,39 @@ import AuthContext from '../../state/auth/AuthContext';
 import { BlurEventType, ChangeEventType } from '../../interfaces/events';
 import { PageProps } from '../../interfaces/interfaces';
 import { InputListProps } from '../../interfaces/form';
+import { PageId } from '../../types/types';
 
-const Login: FC<PageProps> = ({ id }) => {
+const Login: FC<PageProps> = ({ id, title }) => {
   const authContext = useContext(AuthContext);
-  console.log(id);
 
-  const { errors, login, isAuthenticated, clearErr, blur } = authContext;
+  const { login, register, errors, clearErr, isAuthenticated, blur } =
+    authContext;
+  const history = useHistory();
   const initialState = {
+    name: '',
     email: '',
     password: '',
+    password2: '',
   };
-  const history = useHistory();
+  const [passwordErr, setPasswordErr] = useState('');
+  const handleRegister = async () => {
+    const equalPasswords = password === password2;
+    if (equalPasswords) {
+      register(values);
+    }
+    if (!equalPasswords) {
+      setPasswordErr('The password does not match');
+    } else {
+      setPasswordErr('');
+    }
+  };
+
+  const callBackFn = id === PageId.Login ? login : handleRegister;
   const { values, handleChange, handleSubmit, onClearAll } = useFormValidation(
     initialState,
-    login
+    callBackFn
   );
-  const { email, password } = values;
+  const { name, email, password, password2 } = values;
   useEffect(() => {
     if (isAuthenticated) {
       history.push('/');
@@ -31,6 +48,16 @@ const Login: FC<PageProps> = ({ id }) => {
   }, [isAuthenticated, history]);
 
   const inputs: InputListProps[] = [
+    {
+      name: 'name',
+      placeholder: 'name',
+      inputIdentifier: 'name',
+      label: 'Name',
+      isRequired: true,
+      value: name,
+      error: errors.name,
+      hidden: id === PageId.Login,
+    },
     {
       type: 'email',
       name: 'email',
@@ -52,6 +79,17 @@ const Login: FC<PageProps> = ({ id }) => {
       value: password,
       error: errors.password,
     },
+    {
+      type: 'password',
+      name: 'password2',
+      placeholder: 'Confirm password',
+      inputIdentifier: 'password2',
+      label: 'Confirm password',
+      isRequired: true,
+      value: password2,
+      error: passwordErr,
+      hidden: id === PageId.Login,
+    },
   ];
   const onBlur = (e: BlurEventType) => {
     const { name } = e.target;
@@ -59,8 +97,8 @@ const Login: FC<PageProps> = ({ id }) => {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
+    <>
+      <h1>{title}</h1>
 
       {errors.noUser}
       <Form
@@ -70,9 +108,9 @@ const Login: FC<PageProps> = ({ id }) => {
         onSubmit={handleSubmit}
         onClearAll={onClearAll}
         onBlur={onBlur}
-        clearBtn
+        showResetButton
       />
-    </div>
+    </>
   );
 };
 

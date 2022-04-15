@@ -4,4 +4,5 @@ export interface KeyValuePair<T> {
 
 export interface PageProps {
   id: string;
+  title: string;
 }

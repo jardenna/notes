@@ -6,7 +6,7 @@ import Label from './Label';
 
 const Input: FC<InputProps> = ({
   type,
-  hidden,
+
   name,
   inputIdentifier,
   placeholder,
