@@ -1,17 +1,18 @@
 import { useState } from 'react';
-import { InitState } from '../components/auth/Login';
+
 import { ChangeEventType, FormEventType } from '../interfaces/events';
+import { KeyValuePair } from '../interfaces/interfaces';
 
 const useFormValidation = (
-  initialState: InitState,
-  callback: (values: InitState) => void
+  initialState: KeyValuePair<string>,
+  callback: (values: KeyValuePair<string>) => void
 ) => {
   const [values, setValues] = useState(initialState);
 
   const onClearAll = () => {
     setValues(initialState);
   };
-  const onChanges = (e: ChangeEventType) => {
+  const handleChange = (e: ChangeEventType) => {
     const { name, value } = e.target;
 
     setValues({
@@ -20,12 +21,12 @@ const useFormValidation = (
     });
   };
 
-  const onSubmit = async (e: FormEventType) => {
+  const handleSubmit = async (e: FormEventType) => {
     e.preventDefault();
     callback(values);
   };
 
-  return { values, onClearAll, onChanges, onSubmit };
+  return { values, handleChange, handleSubmit, onClearAll };
 };
 
 export default useFormValidation;

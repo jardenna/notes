@@ -18,9 +18,9 @@ function App() {
             <Header />
             <div className="container">
               <Switch>
-                <Route exact path="/" render={() => <Home id={'home'} />} />
+                <Route exact path="/" render={() => <Home id="home" />} />
                 <Route path="/register" render={() => <Register />} />
-                <Route path="/login" render={() => <Login />} />
+                <Route path="/login" render={() => <Login id="login" />} />
               </Switch>
             </div>
           </Router>

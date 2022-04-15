@@ -3,6 +3,11 @@ import { useHistory } from 'react-router-dom';
 
 import Form from '../common/FormElements/Form';
 import AuthContext from '../../state/auth/AuthContext';
+import {
+  BlurEventType,
+  ChangeEventType,
+  FormEventType,
+} from '../../interfaces/events';
 const Register = () => {
   const initialState = {
     name: '',
@@ -75,7 +80,7 @@ const Register = () => {
   const onClearAll = () => {
     setUser(initialState);
   };
-  const onChange = (e) => {
+  const onChange = (e: ChangeEventType) => {
     const { name, value } = e.target;
 
     setUser({
@@ -84,11 +89,11 @@ const Register = () => {
     });
   };
 
-  const onBlur = (e) => {
+  const onBlur = (e: BlurEventType) => {
     const { name } = e.target;
     blur(name);
   };
-  const onSubmit = async (e) => {
+  const onSubmit = async (e: FormEventType) => {
     e.preventDefault();
     if (equalPasswords) {
       register(user);

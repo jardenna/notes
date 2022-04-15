@@ -5,16 +5,9 @@ import Form from '../common/FormElements/Form';
 import useFormValidation from '../../hooks/useFormValidation';
 import AuthContext from '../../state/auth/AuthContext';
 import { BlurEventType } from '../../interfaces/events';
+import { PageProps } from '../../interfaces/interfaces';
 
-export type InitState = {
-  email: string;
-  password: string;
-};
-export interface ILogin {
-  initialState: InitState;
-  login: () => void;
-}
-const Login: FC = () => {
+const Login: FC<PageProps> = () => {
   const authContext = useContext(AuthContext);
 
   const { errors, login, isAuthenticated, clearErr, blur } = authContext;
@@ -23,7 +16,7 @@ const Login: FC = () => {
     password: '',
   };
   const history = useHistory();
-  const { values, onClearAll, onChanges, onSubmit } = useFormValidation(
+  const { values, handleChange, handleSubmit, onClearAll } = useFormValidation(
     initialState,
     login
   );
@@ -66,23 +59,13 @@ const Login: FC = () => {
   return (
     <div>
       <h1>Login</h1>
-      <div
-        style={{
-          display: 'flex',
-          flex: 1,
-          height: '100%',
-          width: '100%',
-          flexDirection: 'column',
-          alignItems: 'center',
-          overflow: 'scroll',
-        }}
-      ></div>
+
       {errors.noUser}
       <Form
         inputs={inputs}
-        onChange={onChanges}
+        onChange={handleChange}
         btnText={'Login'}
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit}
         onClearAll={onClearAll}
         onBlur={onBlur}
         clearBtn
