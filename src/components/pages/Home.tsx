@@ -1,7 +1,15 @@
-const Home = () => {
+import { FC } from 'react';
+import Posts from '../../features/posts/Posts';
+
+interface HomeProps {
+  id: string;
+}
+const Home: FC<HomeProps> = ({ id }) => {
   return (
     <article>
-      <section>hello"""!</section>
+      <section>
+        <Posts />
+      </section>
     </article>
   );
 };

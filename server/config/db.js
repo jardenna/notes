@@ -10,7 +10,11 @@ const db =
   'mongodb://localhost/${name}';
 const connectDB = async () => {
   try {
-    await mongoose.connect(db);
+    await mongoose.connect(db, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+      useCreateIndex: true,
+    });
 
     console.info('MongoDB Connected...');
   } catch (err) {
