@@ -7,8 +7,9 @@ import AuthContext from '../../state/auth/AuthContext';
 import { BlurEventType } from '../../interfaces/events';
 import { PageProps } from '../../interfaces/interfaces';
 
-const Login: FC<PageProps> = () => {
+const Login: FC<PageProps> = ({ id }) => {
   const authContext = useContext(AuthContext);
+  console.log(id);
 
   const { errors, login, isAuthenticated, clearErr, blur } = authContext;
   const initialState = {

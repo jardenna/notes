@@ -19,7 +19,10 @@ function App() {
             <div className="container">
               <Switch>
                 <Route exact path="/" render={() => <Home id="home" />} />
-                <Route path="/register" render={() => <Register />} />
+                <Route
+                  path="/register"
+                  render={() => <Register id="register" />}
+                />
                 <Route path="/login" render={() => <Login id="login" />} />
               </Switch>
             </div>

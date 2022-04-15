@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, FC } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Form from '../common/FormElements/Form';
@@ -8,13 +8,16 @@ import {
   ChangeEventType,
   FormEventType,
 } from '../../interfaces/events';
-const Register = () => {
+import { PageProps } from '../../interfaces/interfaces';
+
+const Register: FC<PageProps> = ({ id }) => {
   const initialState = {
     name: '',
     email: '',
     password: '',
     password2: '',
   };
+  console.log(id);
 
   const authContext = useContext(AuthContext);
 
