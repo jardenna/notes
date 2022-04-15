@@ -9,6 +9,7 @@ import {
   FormEventType,
 } from '../../interfaces/events';
 import { PageProps } from '../../interfaces/interfaces';
+import { InputProps } from '../../interfaces/form';
 
 const Register: FC<PageProps> = ({ id }) => {
   const initialState = {
@@ -36,9 +37,8 @@ const Register: FC<PageProps> = ({ id }) => {
   const { name, email, password, password2 } = user;
 
   const equalPasswords = password === password2;
-  const inputs = [
+  const inputs: any = [
     {
-      type: 'text',
       name: 'name',
       placeholder: 'name',
       inputIdentifier: 'name',

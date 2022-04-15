@@ -4,8 +4,9 @@ import { useHistory } from 'react-router-dom';
 import Form from '../common/FormElements/Form';
 import useFormValidation from '../../hooks/useFormValidation';
 import AuthContext from '../../state/auth/AuthContext';
-import { BlurEventType } from '../../interfaces/events';
+import { BlurEventType, ChangeEventType } from '../../interfaces/events';
 import { PageProps } from '../../interfaces/interfaces';
+import { InputListProps } from '../../interfaces/form';
 
 const Login: FC<PageProps> = ({ id }) => {
   const authContext = useContext(AuthContext);
@@ -29,7 +30,7 @@ const Login: FC<PageProps> = ({ id }) => {
     clearErr();
   }, [isAuthenticated, history]);
 
-  const inputs = [
+  const inputs: InputListProps[] = [
     {
       type: 'email',
       name: 'email',

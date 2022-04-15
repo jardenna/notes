@@ -1,28 +1,31 @@
 import { BlurEventType, ChangeEventType, FormEventType } from './events';
 
 export interface IFormElements {
-  error?: string;
   btnVaiant?: string;
-  btnText?: string;
+  btnText: string;
   className?: string;
-  onSubmit?: (e: FormEventType) => void;
-  inputs?: any;
+  onSubmit: (e: FormEventType) => void;
+  inputs: InputListProps[];
   onClearAll?: () => void;
-  clearBtn?: any;
+  clearBtn?: boolean;
+  onChange: (e: ChangeEventType) => void;
+  onBlur?: (e: BlurEventType) => void;
 }
 
-export interface IInputElements extends IFormElements {
-  name?: string;
-  onChange?: (e: ChangeEventType) => void;
+export interface InputProps extends InputListProps {
+  onChange: (e: ChangeEventType) => void;
   onBlur?: (e: BlurEventType) => void;
-  value?: string;
-  label?: string;
+}
+
+export interface InputListProps {
+  name: string;
+  value: string;
+  label: string;
+  inputIdentifier: string;
+  placeholder?: string;
+  error?: string;
   isRequired?: boolean;
   type?: string;
-  inputIdentifier?: string;
-  placeholder?: string;
-  previewClassName?: string;
-  showIcon?: boolean;
   checked?: boolean;
   hidden?: boolean;
 }

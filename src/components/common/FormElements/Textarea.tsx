@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { IInputElements } from '../../../interfaces/form';
+import { InputProps } from '../../../interfaces/form';
 
-const TextArea: FC<IInputElements> = ({
+const TextArea: FC<InputProps> = ({
   name,
   inputIdentifier,
   placeholder,
@@ -19,7 +19,6 @@ const TextArea: FC<IInputElements> = ({
         id={inputIdentifier}
         placeholder={placeholder}
         onChange={onChange}
-        data-test="component-textarea"
         value={value !== null ? value : ''}
       />
       <label className={value !== '' ? 'top' : ''} htmlFor={inputIdentifier}>

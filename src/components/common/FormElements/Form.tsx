@@ -1,11 +1,11 @@
 import { FC, Fragment } from 'react';
-import { IInputElements } from '../../../interfaces/form';
+import { IFormElements } from '../../../interfaces/form';
 
 import Button from '../Button';
 import Input from './Input';
 import TextArea from './Textarea';
 
-const Form: FC<IInputElements> = ({
+const Form: FC<IFormElements> = ({
   btnVaiant,
   btnText,
   onSubmit,
@@ -21,7 +21,7 @@ const Form: FC<IInputElements> = ({
   return (
     <Fragment>
       <form onSubmit={onSubmit} noValidate className={className}>
-        {inputs.map((input: HTMLFormElement) => {
+        {inputs.map((input) => {
           return (
             <Fragment key={input.inputIdentifier}>
               {input.type !== 'textarea' ? (
@@ -33,7 +33,6 @@ const Form: FC<IInputElements> = ({
                   label={input.label}
                   isRequired={input.isRequired}
                   error={input.error}
-                  previewClassName={input.previewClassName}
                   onChange={onChange}
                   checked={input.checked}
                   onBlur={onBlur}
@@ -46,6 +45,7 @@ const Form: FC<IInputElements> = ({
                   label={input.label}
                   isRequired={input.isRequired}
                   error={input.error}
+                  onChange={onChange}
                 />
               )}
             </Fragment>
