@@ -8,12 +8,18 @@ import { BlurEventType, ChangeEventType } from '../../interfaces/events';
 import { PageProps } from '../../interfaces/interfaces';
 import { InputListProps } from '../../interfaces/form';
 import { PageId } from '../../types/types';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import {
+  createPost,
+  fetchUserById,
+  register,
+  reset,
+} from '../../features/auth/authSlice';
 
 const Login: FC<PageProps> = ({ id, title }) => {
   const authContext = useContext(AuthContext);
 
-  const { login, register, errors, clearErr, isAuthenticated, blur } =
-    authContext;
+  const { login, errors, clearErr, isAuthenticated, blur } = authContext;
   const history = useHistory();
   const initialState = {
     name: '',
@@ -21,11 +27,15 @@ const Login: FC<PageProps> = ({ id, title }) => {
     password: '',
     password2: '',
   };
+  const dispatch = useAppDispatch();
+  const a = useAppSelector(createPost);
+  console.log(a);
   const [passwordErr, setPasswordErr] = useState('');
   const handleRegister = async () => {
     const equalPasswords = password === password2;
+
     if (equalPasswords) {
-      register(values);
+      dispatch(register(values));
     }
     if (!equalPasswords) {
       setPasswordErr('The password does not match');

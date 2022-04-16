@@ -1,6 +1,5 @@
 import { RootState } from './../../app/store';
 import { createSlice, PayloadAction, nanoid } from '@reduxjs/toolkit';
-
 export interface IProducts {
   title?: string;
   id?: string;
@@ -27,14 +26,10 @@ const postSlice = createSlice({
         const newProduct = action.payload;
         state.list = [newProduct, ...state.list];
       },
-      prepare: (post: IProducts) => ({
-        payload: { id: nanoid(5), post },
-      }),
+      prepare: (post: IProducts) => {
+        return { payload: { id: nanoid(3), title: post.title } };
+      },
     },
-    // addPost: (state, action: PayloadAction<IProducts>) => {
-    //   const newProduct = action.payload;
-    //   state.list = [newProduct, ...state.list];
-    // },
   },
 });
 

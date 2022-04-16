@@ -17,7 +17,6 @@ const Form: FC<FormProps> = ({
   onBlur,
 }) => {
   const btnClass = `btn-${btnVaiant ? btnVaiant : 'primary'}`;
-  console.log(inputs);
 
   return (
     <form onSubmit={onSubmit} noValidate className={className}>

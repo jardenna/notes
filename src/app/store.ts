@@ -4,12 +4,16 @@ import logger from 'redux-logger';
 import count from '../features/counter/counterSlice';
 import fruit from '../features/fruitStand/fruitSlice';
 import posts from '../features/posts/postSlice';
+import auth from '../features/auth/authSlice';
+import authReducer from '../features/auth/authSlice';
 
 const reducer = {
   count,
   fruit,
   posts,
+  auth: authReducer,
 };
+
 export const store = configureStore({
   reducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
