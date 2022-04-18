@@ -1,20 +1,20 @@
-import { useContext, useEffect, Fragment } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-
-import AuthContext from '../../state/auth/AuthContext';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { logout } from '../../features/auth/authSlice';
 
 const Navbar = () => {
-  const authContext = useContext(AuthContext);
-  const { isAuthenticated, logout, loadUser, user } = authContext;
+  const { user, isAuthenticated } = useAppSelector((state) => state.auth);
+  console.log(user, logout, 78);
 
   const history = useHistory();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // if (!isAuthenticated) {
-    //   history.push('/login');
-    // }
-    loadUser();
+    if (!isAuthenticated) {
+      history.push('/login');
+    }
   }, [isAuthenticated, history]);
 
   const guestLinks = (
@@ -32,11 +32,15 @@ const Navbar = () => {
       </li>
     </>
   );
+  const test = () => {
+    console.log(123);
 
+    dispatch(logout());
+  };
   const authLinks = (
     <>
       <li className="nav-item flex-item">
-        <button className="btn-primary" onClick={logout}>
+        <button className="btn-primary" onClick={test}>
           Logout
         </button>
       </li>

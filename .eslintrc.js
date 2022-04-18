@@ -1,5 +1,5 @@
 module.exports = {
-  parser: '@babel/eslint-parser',
+  parser: '@typescript-eslint/parser',
   env: {
     browser: true,
     es6: true,
@@ -9,11 +9,11 @@ module.exports = {
   parserOptions: {
     ecmaFeatures: {
       experimentalObjectRestSpread: true,
-      jsx: true,
+      tsx: true,
     },
     sourceType: 'module',
   },
-  plugins: ['react'],
+  plugins: ['react', '@typescript-eslint'],
   rules: {
     'react/prop-types': ['off'],
     'react/no-direct-mutation-state': 1,
@@ -30,12 +30,16 @@ module.exports = {
     'comma-dangle': 0,
     'no-extra-semi': 1,
     'no-undef': 1,
-    'no-unused-vars': 1,
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      { vars: 'all', args: 'after-used', ignoreRestSiblings: false },
+    ],
     'no-warning-comments': [
       'error',
       { terms: ['todo', 'fixme', 'any other term'], location: 'anywhere' },
     ],
-    quotes: ['error', 'single'],
+    //quotes: ['error', 'single'],
     semi: ['error', 'always'],
     'no-console': ['warn', { allow: ['info', 'error'] }],
   },

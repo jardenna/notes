@@ -1,42 +1,52 @@
 import { RootState } from './../../app/store';
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { signupUrl } from '../../utils/endpoints';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { loginUrl, logoutUrl, signupUrl } from '../../utils/endpoints';
 import fetchApi from '../../utils/fetchApi';
-import { current } from 'immer';
+import { KeyValuePair } from '../../interfaces/interfaces';
 
-interface AsyncState {
+import errorObj, { ErrorObjState } from '../../utils/utils';
+//import { current } from 'immer';
+
+interface UsersState {
   isAuthenticated: boolean;
-  user: string | null;
+  user: ErrorObjState | null;
   isLoading: boolean;
-  isError: boolean;
-  isSuccess: boolean;
+  isError: ErrorObjState;
 }
-
 const initialState = {
   isAuthenticated: false,
-  user: null,
   isLoading: false,
-  issuccess: false,
-  isError: false,
-};
+  user: null,
+  isError: errorObj,
+} as UsersState;
+
 //Register user
-export const register = createAsyncThunk('auth/register', async (user: any) => {
-  try {
-    const data = await fetchApi('post', signupUrl, user);
-
-    return data;
-  } catch (error: any) {
-    console.log(error);
-  }
-});
-
-export const fetchUserById = createAsyncThunk(
+export const register = createAsyncThunk(
   'auth/register',
-  async (user: any, thunkAPI) => {
-    const response = await fetchApi('post', signupUrl, user);
-    return response.data;
+  async (user: KeyValuePair<string>, thunkAPI) => {
+    try {
+      const response = await fetchApi('post', signupUrl, user);
+      return response;
+      //return await authService.register(user);
+    } catch (error: any) {
+      const message = error?.response?.message;
+      return thunkAPI.rejectWithValue(message);
+    }
   }
 );
+
+export const login = createAsyncThunk(
+  'auth/login',
+  async (formData: KeyValuePair<string>) => {
+    const response = await fetchApi('post', loginUrl, formData);
+    return response;
+  }
+);
+
+export const logout = createAsyncThunk('auth/logout', async () => {
+  const response = await fetchApi('get', logoutUrl);
+  return response;
+});
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -44,24 +54,47 @@ export const authSlice = createSlice({
   reducers: {
     reset: (state) => {
       state.isLoading = false;
-      state.issuccess = false;
-      state.isError = false;
+      state.isError = errorObj;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(register.fulfilled, (state, action) => {
-        state.user = action.payload;
-      })
       .addCase(register.pending, (state) => {
         state.isLoading = true;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.user;
+        state.isAuthenticated = action.payload?.user?._id ? true : false;
+        state.isError = action.payload.errors;
+      })
+      .addCase(register.rejected, (state) => {
+        state.isAuthenticated = false;
+        state.isError = errorObj;
+        state.user = null;
+      })
+      .addCase(login.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.user;
+        state.isAuthenticated = action.payload?.user?._id ? true : false;
+        state.isError = action.payload.errors;
+      })
+      .addCase(login.rejected, (state) => {
+        state.isLoading = false;
+        state.isAuthenticated = false;
+        state.isError = errorObj;
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.user = null;
+        state.isAuthenticated = false;
       });
-    // .addCase(register.fulfilled, (state, action) => {
-    //   state.isLoading = false;
-    //   state.user = action.payload;
-    // });
   },
 });
-export const createPost = (state: RootState) => state.auth;
+
 export const { reset } = authSlice.actions;
+export const user = (state: RootState) => state.auth;
+
 export default authSlice.reducer;
