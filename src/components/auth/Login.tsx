@@ -14,7 +14,8 @@ const Login: FC<PageProps> = ({ id, title }) => {
   const { user, isLoading, isError, isAuthenticated } = useAppSelector(
     (state) => state.auth
   );
-  console.log({ user, isError, isAuthenticated });
+
+  console.log(isLoading);
 
   const initialState = {
     name: '',
