@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import Form from '../common/FormElements/Form';
 import useFormValidation from '../../hooks/useFormValidation';
@@ -17,7 +16,6 @@ const Login: FC<PageProps> = ({ id, title }) => {
   );
   console.log({ user, isError, isAuthenticated });
 
-  const history = useHistory();
   const initialState = {
     name: '',
     email: '',
@@ -52,11 +50,8 @@ const Login: FC<PageProps> = ({ id, title }) => {
   );
   const { name, email, password, password2 } = values;
   useEffect(() => {
-    if (isAuthenticated) {
-      history.push('/');
-    }
     dispatch(reset());
-  }, [isAuthenticated, history]);
+  }, []);
 
   const inputs: InputListProps[] = [
     {
