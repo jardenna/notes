@@ -1,22 +1,27 @@
 import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 
-import count from '../features/counter/counterSlice';
-import fruit from '../features/fruitStand/fruitSlice';
+//MIDDLEWARE
+const localStorageMiddleware = ({ getState }: any) => {
+  return (next: (arg0: any) => any) => (action: any) => {
+    const result = next(action);
+    localStorage.setItem('applicationState', JSON.stringify(getState()));
+    return result;
+  };
+};
+
 import posts from '../features/posts/postSlice';
-import auth from '../features/auth/authSlice';
 import authReducer from '../features/auth/authSlice';
 
 const reducer = {
-  count,
-  fruit,
   posts,
   auth: authReducer,
 };
 
 export const store = configureStore({
   reducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(logger).concat(localStorageMiddleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
