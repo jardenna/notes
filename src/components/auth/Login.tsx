@@ -8,14 +8,17 @@ import { PageProps } from '../../interfaces/interfaces';
 import { InputListProps } from '../../interfaces/form';
 import { PageId } from '../../types/types';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { register, login, reset } from '../../features/auth/authSlice';
+import {
+  register,
+  login,
+  reset,
+  currentUser,
+} from '../../features/auth/authSlice';
 
 const Login: FC<PageProps> = ({ id, title }) => {
   const { user, isLoading, isError, isAuthenticated } = useAppSelector(
     (state) => state.auth
   );
-
-  console.log(isLoading);
 
   const initialState = {
     name: '',
@@ -24,6 +27,9 @@ const Login: FC<PageProps> = ({ id, title }) => {
     password2: '',
   };
   const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(currentUser());
+  }, []);
 
   const [passwordErr, setPasswordErr] = useState('');
   const handleRegister = async () => {

@@ -2,14 +2,17 @@ import { useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { logout } from '../../features/auth/authSlice';
+import { currentUser, logout } from '../../features/auth/authSlice';
 
 const Navbar = () => {
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
   let navigate = useNavigate();
+  console.log(user, isAuthenticated);
 
   const dispatch = useAppDispatch();
-
+  useEffect(() => {
+    dispatch(currentUser());
+  }, []);
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login');
